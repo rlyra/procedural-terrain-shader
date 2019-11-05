@@ -14,23 +14,23 @@ public class SimpleTest : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*testeLeve();
-        testeMedio();
-        testePesado();*/
+        //testeLeve();
+        //testeMedio();
+        //testePesado();
     }
 
     void CriarCubos()
     {
         for(int i = 0; i < 2048; i++)
         {
-            GameObject esfera = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            esfera.AddComponent<Rigidbody>();
+            GameObject cubo = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            cubo.AddComponent<Rigidbody>();
         }
     }
 
     void testeLeve()
     {
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < 10; i++)
         {
             Debug.Log(i);
         }

@@ -69,5 +69,81 @@ public class TerrainMesh : MonoBehaviour
         mesh.vertices = vertices;
         mesh.triangles = triangles;
         mesh.RecalculateNormals();
+
+        gameObject.GetComponent<MeshCollider>().sharedMesh = mesh;
+    }
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            vertices[(int)(Random.value * vertices.Length)].y = 10;
+            mesh.vertices = vertices;
+            gameObject.GetComponent<MeshCollider>().sharedMesh = mesh;
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        StartCoroutine(naoEhGambiarra());
+    }
+
+    IEnumerator naoEhGambiarra()
+    {
+        GameObject player = GameObject.FindWithTag("Player");
+        float posX = player.transform.position.x;//collision.GetContact(0).point.x + size * 0.5f;
+        float posZ = player.transform.position.z;//collision.GetContact(0).point.z + size * 0.5f;
+
+        int posXi = (int)((posX + size * 0.5f) / density);
+        int posZi = (int)((posZ + size * 0.5f) / density);
+
+
+        yield return new WaitForSeconds(0.1f);
+
+        float altura = 10;
+
+        changeVertex(posXi - 2, posZi - 2, 1 / altura);
+        changeVertex(posXi - 2, posZi - 1, 4 / altura);
+        changeVertex(posXi - 2, posZi + 0, 7 / altura);
+        changeVertex(posXi - 2, posZi + 1, 4 / altura);
+        changeVertex(posXi - 2, posZi + 2, 1 / altura);
+
+        changeVertex(posXi - 1, posZi - 2, 4 / altura);
+        changeVertex(posXi - 1, posZi - 1, 16 / altura);
+        changeVertex(posXi - 1, posZi + 0, 26 / altura);
+        changeVertex(posXi - 1, posZi + 1, 16 / altura);
+        changeVertex(posXi - 1, posZi + 2, 4 / altura);
+
+        changeVertex(posXi + 0, posZi - 2, 7 / altura);
+        changeVertex(posXi + 0, posZi - 1, 26 / altura);
+        changeVertex(posXi + 0, posZi + 0, 28 / altura);
+        changeVertex(posXi + 0, posZi + 1, 26 / altura);
+        changeVertex(posXi + 0, posZi + 2, 7 / altura);
+
+        changeVertex(posXi + 1, posZi - 2, 4 / altura);
+        changeVertex(posXi + 1, posZi - 1, 16 / altura);
+        changeVertex(posXi + 1, posZi + 0, 26 / altura);
+        changeVertex(posXi + 1, posZi + 1, 16 / altura);
+        changeVertex(posXi + 1, posZi + 2, 4 / altura);
+
+
+        changeVertex(posXi + 2, posZi - 2, 1 / altura);
+        changeVertex(posXi + 2, posZi - 1, 4 / altura);
+        changeVertex(posXi + 2, posZi + 0, 7 / altura);
+        changeVertex(posXi + 2, posZi + 1, 4 / altura);
+        changeVertex(posXi + 2, posZi + 2, 1 / altura);
+
+        mesh.vertices = vertices;
+        mesh.RecalculateNormals();
+    }
+
+    private void changeVertex(int x, int z, float val)
+    {
+        if (vertices[(int)(x * (height + 1) + z)].y < val)
+        {
+            vertices[(int)(x * (height + 1) + z)].y = val;
+            //gameObject.GetComponent<MeshCollider>().sharedMesh = mesh;
+        }
     }
 }

@@ -4,21 +4,25 @@ using UnityEngine;
 
 public class EnviromentCreation : MonoBehaviour
 {
+    public GameObject player;
     public GameObject terrainTile;
     public int terrainWidth;
     public int terrainHeight;
 
     void Start()
     {
-        float startPointW = terrainWidth / -2.0f;
-        float startPointH = terrainHeight / -2.0f;
+
+        float startPointW = terrainTile.GetComponent<TerrainMesh>().size * -0.5f;
+        float startPointH = terrainTile.GetComponent<TerrainMesh>().size * -0.5f;
 
         for(int i = 0; i < terrainWidth; i++)
         {
             for (int j = 0; j < terrainHeight; j++)
             {
-                Instantiate(terrainTile, new Vector3(startPointW + i, 0, startPointH + j), Quaternion.identity);
+                Instantiate(terrainTile, new Vector3(startPointW + i, 1, startPointH + j), Quaternion.identity);
             }
         }
+
+        GameObject players = Instantiate(player, new Vector3(0, 2, 0), Quaternion.identity);
     }
 }
